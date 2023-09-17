@@ -1,0 +1,6 @@
+# Values
+bbdd: kubernetes
+pass: root
+user: user
+root: root
+namespace: apps

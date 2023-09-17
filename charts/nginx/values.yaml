@@ -1,0 +1,27 @@
+# Default values for chart-values.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+resources:
+  limits:
+    mem: "200Mi"
+    cpu: "2"
+  requests:
+    mem: "100Mi"
+    cpu: "0.5"
+
+image:
+  tag: "alpine"
+  repository: "nginx"
+
+environment:
+  - zero
+  - one
+  - two
+  - three
+  - four
+
+envs:
+  - name: PORT
+    value: 80
+  - name: HOST
+    value: "localhost"

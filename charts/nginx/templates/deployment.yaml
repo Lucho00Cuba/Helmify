@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 5
+  template: 
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          limits:
+            memory: {{ .Values.resources.limits.mem }}
+            cpu: {{ .Values.resources.limits.cpu }}
+          requests:
+            memory: {{ .Values.resources.requests.mem }} 
+            cpu: {{ .Values.resources.requests.cpu }}
+        env:
+        {{- range .Values.environment }}
+        - name: NUMBER
+          value: {{ . }}
+        {{- end }}
+        {{- range $key, $value := .Values.environment }}
+        - name: Num-{{ $key }}
+          value: {{ $value }}
+        {{- end }}
+        {{- range $key, $value := .Values.envs }}
+        - name: {{ $value.name }}
+          value: {{ $value.value }}
+        {{- end }}
